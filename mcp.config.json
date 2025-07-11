@@ -1,0 +1,56 @@
+{
+  "mcpServer": "presearch",
+  "name": "presearch-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server for Presearch web search functionality",
+  "author": "Your Name",
+  "license": "MIT",
+  "tools": [
+    {
+      "name": "presearch_search",
+      "description": "Search the web using Presearch API with advanced filtering options",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Search query"
+          },
+          "page": {
+            "type": "number",
+            "description": "Page number for pagination (default: 1)",
+            "default": 1
+          },
+          "lang": {
+            "type": "string",
+            "description": "Language code (e.g., 'en', 'es')"
+          },
+          "time": {
+            "type": "string",
+            "enum": ["any", "day", "week", "month", "year"],
+            "description": "Time filter for results"
+          },
+          "safe": {
+            "type": "string",
+            "enum": ["0", "1"],
+            "description": "Safe search setting"
+          },
+          "location": {
+            "type": "string",
+            "description": "Location for localized results"
+          },
+          "ip": {
+            "type": "string",
+            "description": "IP address for geo-targeting"
+          }
+        },
+        "required": ["query"]
+      }
+    }
+  ],
+  "capabilities": {
+    "tools": true,
+    "resources": false,
+    "prompts": false
+  }
+}
