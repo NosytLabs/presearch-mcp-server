@@ -56,7 +56,7 @@ Create a `.env` file in the project root:
 PRESEARCH_API_KEY=your_presearch_api_key_here
 
 # Optional: Custom API endpoint (defaults to official Presearch API)
-PRESEARCH_BASE_URL=https://api.presearch.org/v1
+PRESEARCH_BASE_URL=https://na-us-1.presearch.com/v1
 ```
 
 ### Getting Your API Key

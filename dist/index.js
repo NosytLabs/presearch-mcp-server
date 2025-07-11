@@ -1,27 +1,42 @@
 #!/usr/bin/env node
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-// Removed unused imports - McpServer handles tool registration automatically
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import dotenv from 'dotenv';
 import { z } from 'zod';
 // Load environment variables
 dotenv.config();
+// Enable debug logging if DEBUG environment variable is set
+const DEBUG = process.env.DEBUG === 'presearch-mcp';
+const log = (message, ...args) => {
+    if (DEBUG) {
+        console.error(`[DEBUG] ${message}`, ...args);
+    }
+};
 class PresearchMCPServer {
     server;
     apiKey;
     baseUrl;
     constructor() {
         this.apiKey = process.env.PRESEARCH_API_KEY || '';
-        this.baseUrl = process.env.PRESEARCH_BASE_URL || 'https://api.presearch.org/v1';
+        this.baseUrl = process.env.PRESEARCH_BASE_URL || 'https://na-us-1.presearch.com/v1';
+        log('Initializing Presearch MCP Server', {
+            hasApiKey: !!this.apiKey,
+            baseUrl: this.baseUrl
+        });
         if (!this.apiKey) {
-            throw new Error('PRESEARCH_API_KEY environment variable is required');
+            throw new Error('PRESEARCH_API_KEY environment variable is required. Please check your .env file.');
+        }
+        // Validate API key format (basic check)
+        if (this.apiKey.length < 10) {
+            throw new Error('PRESEARCH_API_KEY appears to be invalid (too short). Please check your API key.');
         }
         this.server = new McpServer({
             name: 'presearch-mcp-server',
             version: '1.0.0',
         });
         this.setupRequestHandlers();
+        log('Presearch MCP Server initialized successfully');
     }
     setupRequestHandlers() {
         this.server.registerTool('presearch_search', {
@@ -79,21 +94,50 @@ class PresearchMCPServer {
             ...(params.location && { location: params.location }),
             ...(params.ip && { ip: params.ip })
         };
-        const response = await axios.get(url, {
-            params: requestParams,
-            headers: {
-                'Authorization': `Bearer ${this.apiKey}`,
-                'Content-Type': 'application/json'
-            },
-            timeout: 10000
-        });
-        const data = response.data.data || response.data;
-        return {
-            standardResults: data.standardResults || [],
-            query: params.query,
-            totalResults: data.standardResults?.length || 0,
-            page: params.page || 1
-        };
+        log('Making search request', { url, params: requestParams });
+        try {
+            const response = await axios.get(url, {
+                params: requestParams,
+                headers: {
+                    'Authorization': `Bearer ${this.apiKey}`,
+                    'Accept': 'application/json',
+                    'User-Agent': 'presearch-mcp/1.0.0'
+                },
+                timeout: 15000
+            });
+            log('Search response received', { status: response.status, dataKeys: Object.keys(response.data) });
+            const data = response.data.data || response.data;
+            return {
+                standardResults: data.standardResults || [],
+                query: params.query,
+                totalResults: data.standardResults?.length || 0,
+                page: params.page || 1
+            };
+        }
+        catch (error) {
+            if (error instanceof AxiosError) {
+                const status = error.response?.status;
+                const message = error.response?.data?.message || error.message;
+                log('Search request failed', { status, message, url });
+                if (status === 401) {
+                    throw new Error('Invalid API key. Please check your PRESEARCH_API_KEY environment variable.');
+                }
+                else if (status === 429) {
+                    throw new Error('Rate limit exceeded. Please try again later.');
+                }
+                else if (status === 403) {
+                    throw new Error('Access forbidden. Please check your API key permissions.');
+                }
+                else if (error.code === 'ECONNABORTED') {
+                    throw new Error('Request timeout. The Presearch API may be experiencing high load.');
+                }
+                else {
+                    throw new Error(`Search request failed: ${message} (Status: ${status})`);
+                }
+            }
+            log('Unexpected error during search', error);
+            throw new Error(`Unexpected error during search: ${error instanceof Error ? error.message : String(error)}`);
+        }
     }
     async start() {
         const transport = new StdioServerTransport();
@@ -101,8 +145,11 @@ class PresearchMCPServer {
         console.error('Presearch MCP server running on stdio');
     }
 }
-const server = new PresearchMCPServer();
-server.start().catch((error) => {
-    console.error('Failed to start Presearch MCP server:', error);
-    process.exit(1);
-});
+// Export default function for Smithery compatibility
+export default function ({ sessionId, config }) {
+    const server = new PresearchMCPServer();
+    return server.start().catch((error) => {
+        console.error('Failed to start Presearch MCP server:', error);
+        process.exit(1);
+    });
+}

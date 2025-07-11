@@ -47,7 +47,7 @@ class PresearchMCPServer {
 
   constructor() {
     this.apiKey = process.env.PRESEARCH_API_KEY || '';
-    this.baseUrl = process.env.PRESEARCH_BASE_URL || 'https://api.presearch.org/v1';
+    this.baseUrl = process.env.PRESEARCH_BASE_URL || 'https://na-us-1.presearch.com/v1';
     
     log('Initializing Presearch MCP Server', { 
       hasApiKey: !!this.apiKey, 
@@ -147,7 +147,7 @@ class PresearchMCPServer {
         params: requestParams,
         headers: {
           'Authorization': `Bearer ${this.apiKey}`,
-          'Content-Type': 'application/json',
+          'Accept': 'application/json',
           'User-Agent': 'presearch-mcp/1.0.0'
         },
         timeout: 15000
