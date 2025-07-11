@@ -1,0 +1,32 @@
+{
+  "name": "presearch-mcp-server",
+  "version": "1.0.0",
+  "description": "A minimal Model Context Protocol (MCP) server for Presearch web search functionality",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "presearch-mcp-server": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc && node dist/index.js"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "presearch",
+    "search"
+  ],
+  "author": "Presearch MCP Server Team",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "axios": "^1.7.9",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
+  }
+}
