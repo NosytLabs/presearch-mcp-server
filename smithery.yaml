@@ -1,3 +1,103 @@
-runtime: "typescript"
-env:
-  NODE_ENV: "production"
+name: presearch-mcp-server
+description: A Model Context Protocol (MCP) server that provides comprehensive search capabilities using the Presearch API
+author: NosyLabs
+homepage: https://github.com/NosyLabs/presearch-mcp-server
+license: MIT
+version: 2.0.0
+
+# MCP Server Configuration
+mcp:
+  server:
+    name: presearch
+    description: Presearch MCP Server for web search capabilities
+    version: 2.0.0
+
+# Runtime Configuration
+runtime:
+  node: ">=18.0.0"
+  npm: ">=8.0.0"
+
+# Environment Variables
+environment:
+  required:
+    - PRESEARCH_API_KEY
+  optional:
+    - PRESEARCH_BASE_URL
+    - PRESEARCH_TIMEOUT
+    - PRESEARCH_MAX_RETRIES
+    - PRESEARCH_RETRY_DELAY
+    - PRESEARCH_RATE_LIMIT
+    - PRESEARCH_RATE_LIMIT_WINDOW
+    - PRESEARCH_CACHE_TTL
+    - PRESEARCH_CACHE_MAX_SIZE
+    - PRESEARCH_ENABLE_CACHE
+    - PRESEARCH_LOG_LEVEL
+    - PRESEARCH_MOCK_MODE
+
+# Build Configuration
+build:
+  command: npm run build
+  output: dist/
+  entry: dist/index.js
+
+# Development Configuration
+development:
+  command: npm run dev
+  watch:
+    - src/**/*.ts
+    - package.json
+    - tsconfig.json
+
+# Tools Provided
+tools:
+  - name: presearch_search
+    description: Perform web search with advanced filtering options
+  - name: presearch_multi_search
+    description: Execute multiple search queries simultaneously
+  - name: presearch_suggestions
+    description: Get search suggestions and autocomplete
+  - name: presearch_search_analytics
+    description: Get analytics and insights about search patterns
+  - name: presearch_domain_search
+    description: Search within a specific domain or website
+  - name: presearch_filtered_search
+    description: Advanced search with content type filtering
+  - name: presearch_cache_stats
+    description: Get cache statistics and performance metrics
+  - name: presearch_cache_clear
+    description: Clear the search results cache
+
+# Categories
+categories:
+  - search
+  - web
+  - api
+  - mcp
+
+# Keywords
+keywords:
+  - presearch
+  - search
+  - web-search
+  - mcp
+  - model-context-protocol
+  - api
+  - typescript
+  - nodejs
+
+# Repository Information
+repository:
+  type: git
+  url: https://github.com/NosyLabs/presearch-mcp-server.git
+
+# Documentation
+documentation:
+  readme: README.md
+  changelog: CHANGELOG.md
+  contributing: CONTRIBUTING.md
+
+# Support
+support:
+  issues: https://github.com/NosyLabs/presearch-mcp-server/issues
+  discussions: https://github.com/NosyLabs/presearch-mcp-server/discussions
+  email: hi@nosytlabs.com
