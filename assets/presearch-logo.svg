@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" width="200" height="60">
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4A90E2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#357ABD;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect x="5" y="5" width="50" height="50" rx="6" fill="url(#logoGradient)"/>
+  <path d="M15 20 L45 20 M15 25 L45 25 M15 30 L38 30 M15 35 L32 35" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="38" cy="35" r="3" fill="white"/>
+  <path d="M40 37 L45 42" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  <text x="65" y="35" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#2C5F8A">Presearch</text>
+  <text x="65" y="48" font-family="Arial, sans-serif" font-size="12" fill="#666">MCP Server</text>
+</svg>
