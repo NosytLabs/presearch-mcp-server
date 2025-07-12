@@ -1,7 +1,7 @@
 {
-  "name": "@nosylabs/presearch-mcp-server",
-  "version": "1.0.0",
-  "description": "Model Context Protocol (MCP) server for Presearch web search functionality - Built by NosyLabs",
+  "name": "presearch-mcp-server",
+  "version": "2.0.0",
+  "description": "Model Context Protocol (MCP) server for Presearch web search functionality",
   "main": "dist/index.js",
   "type": "module",
   "bin": {
@@ -15,6 +15,7 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "npm run build && npm start",
+    "clean": "rm -rf dist",
     "prepublishOnly": "npm run build"
   },
   "keywords": [
@@ -24,16 +25,16 @@
     "model-context-protocol",
     "ai-tools"
   ],
-  "author": "NosyLabs <contact@nosylabs.com>",
+  "author": "Presearch Community",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nosylabs/presearch-mcp-server.git"
+    "url": "https://github.com/presearch/presearch-mcp-server.git"
   },
   "bugs": {
-    "url": "https://github.com/nosylabs/presearch-mcp-server/issues"
+    "url": "https://github.com/presearch/presearch-mcp-server/issues"
   },
-  "homepage": "https://nosylabs.com",
+  "homepage": "https://presearch.io",
   "files": [
     "dist",
     "src",
