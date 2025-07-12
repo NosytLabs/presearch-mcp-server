@@ -1,10 +1,12 @@
 {
   "mcpServer": "presearch",
-  "name": "presearch-mcp-server",
+  "name": "@nosylabs/presearch-mcp-server",
   "version": "1.0.0",
-  "description": "MCP server for Presearch web search functionality",
-  "author": "Your Name",
+  "description": "Model Context Protocol (MCP) server for Presearch web search functionality - Built by NosyLabs",
+  "author": "NosyLabs <contact@nosylabs.com>",
   "license": "MIT",
+  "homepage": "https://nosylabs.com",
+  "repository": "https://github.com/nosylabs/presearch-mcp-server",
   "tools": [
     {
       "name": "presearch_search",
@@ -45,6 +47,15 @@
           }
         },
         "required": ["query"]
+      }
+    },
+    {
+      "name": "presearch_cache_stats",
+      "description": "Get cache statistics including hits, misses, and hit rate",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
       }
     }
   ],

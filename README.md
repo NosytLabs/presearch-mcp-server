@@ -4,12 +4,16 @@
 
 <img src="https://raw.githubusercontent.com/PresearchOfficial/presearch-brand-assets/main/logos/presearch-logo-horizontal-color.svg" alt="Presearch Logo" width="300">
 
-**A powerful Model Context Protocol (MCP) server for decentralized web search**
+**A Model Context Protocol (MCP) server for decentralized web search**
 
+[![Built by NosyLabs](https://img.shields.io/badge/Built%20by-NosyLabs-blue)](https://nosylabs.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Deploy on Smithery](https://img.shields.io/badge/Deploy%20on-Smithery-purple)](https://smithery.ai)
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-green.svg)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0%2B-blue.svg)](https://www.typescriptlang.org/)
 [![MCP](https://img.shields.io/badge/MCP-Compatible-purple.svg)](https://modelcontextprotocol.io/)
+
+**Built by [NosyLabs](https://nosylabs.com)** - Advancing AI through innovative tools and integrations.
 
 </div>
 
@@ -22,21 +26,21 @@
 - 🔒 **Safe Search**: Configurable safe search settings
 - 🌏 **Multi-language**: Support for multiple languages
 - 📄 **Pagination**: Navigate through search result pages
+- 📝 **TypeScript**: Full TypeScript support with type checking
 
-## 🚀 Quick Start
+## 🚀 Installation
 
 ### Prerequisites
 
 - Node.js 18+ 
-- npm or yarn
 - Presearch API key ([Get yours here](https://presearch.com/api))
 
-### Installation
+### Setup
 
 ```bash
 # Clone the repository
-git clone https://github.com/NosytLabs/presearch-mcp.git
-cd presearch-mcp
+git clone https://github.com/nosylabs/presearch-mcp-server.git
+cd presearch-mcp-server
 
 # Install dependencies
 npm install
@@ -100,202 +104,174 @@ Add to your MCP client configuration:
 }
 ```
 
-## 🔧 API Reference
+### Available Tools
 
-### `presearch_search`
+#### `presearch_search`
 
-Performs web search using Presearch's decentralized search network.
+Performs a web search using Presearch's decentralized search engine.
 
-#### Parameters
+**Parameters:**
+- `query` (string, required): The search query
+- `page` (number, optional): Page number for pagination (default: 1)
+- `lang` (string, optional): Language code (e.g., "en", "es", "fr")
+- `time` (string, optional): Time filter: "any", "day", "week", "month", "year"
+- `safe` (string, optional): Safe search: "0" (off) or "1" (on)
+- `location` (string, optional): Location for localized results
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `query` | string | ✅ | Search query string |
-| `page` | number | ❌ | Page number for pagination (default: 1) |
-| `lang` | string | ❌ | Language code (e.g., "en", "es", "fr") |
-| `time` | string | ❌ | Time filter: "any", "day", "week", "month", "year" |
-| `safe` | string | ❌ | Safe search: "0" (off) or "1" (on) |
-| `location` | string | ❌ | Location for localized results (e.g., "New York", "London") |
-| `ip` | string | ❌ | IP address for geo-targeting (e.g., "8.8.8.8") |
-
-#### Geo-targeting Notes
-
-- **IP Parameter**: <mcreference link="https://docs.presearch.io/nodes/api" index="1">Neither IP nor location parameters are strictly required by the Presearch API</mcreference>
-- **Default Behavior**: When no IP or location is specified, Presearch uses the server's IP for geo-targeting
-- **Custom IP**: You can specify any valid IPv4 address for targeted results
-- **Location Override**: Location parameter takes precedence over IP-based geo-targeting
-
-#### Example Usage
-
-```javascript
-// Basic search
-{
-  "query": "artificial intelligence"
-}
-
-// Advanced search with geo-targeting
-{
-  "query": "best restaurants",
-  "location": "San Francisco",
-  "time": "week",
-  "safe": "1",
-  "lang": "en"
-}
-
-// IP-based geo-targeting
-{
-  "query": "weather forecast",
-  "ip": "8.8.8.8",
-  "time": "day"
-}
-```
-
-#### Example Response
-
+**Example:**
 ```json
 {
-  "standardResults": [
-    {
-      "title": "Artificial Intelligence - Wikipedia",
-      "link": "https://en.wikipedia.org/wiki/Artificial_intelligence",
-      "description": "Artificial intelligence (AI) is intelligence demonstrated by machines..."
-    },
-    {
-      "title": "What is AI? | IBM",
-      "link": "https://www.ibm.com/topics/artificial-intelligence",
-      "description": "Artificial intelligence leverages computers and machines..."
-    }
-  ],
   "query": "artificial intelligence",
-  "totalResults": 2,
-  "page": 1
+  "lang": "en",
+  "time": "week"
 }
 ```
 
-## 🛠️ Development
+#### `presearch_cache_stats`
 
-### Project Structure
+Returns cache and performance statistics for monitoring.
 
+**Parameters:** None
+
+## 🚀 Deployment
+
+### Deploy on Smithery (Recommended)
+
+The easiest way to deploy this MCP server is using [Smithery](https://smithery.ai):
+
+1. Fork this repository to your GitHub account
+2. Connect your GitHub to Smithery
+3. Select this repository for deployment
+4. Smithery will automatically detect the `smithery.yaml` configuration
+5. Deploy with one click!
+
+### Manual Deployment
+
+#### Using Docker
+
+```bash
+# Build the Docker image
+docker build -t presearch-mcp-server .
+
+# Run the container
+docker run -p 3000:3000 -e PRESEARCH_API_KEY=your_key presearch-mcp-server
 ```
-presearch-mcp/
-├── src/
-│   └── index.ts          # Main server implementation
-├── dist/                 # Compiled JavaScript
-├── package.json          # Dependencies and scripts
-├── tsconfig.json         # TypeScript configuration
-├── .env.example          # Environment template
-└── README.md            # This file
-```
 
-### Building from Source
+#### Using Node.js
 
 ```bash
 # Install dependencies
 npm install
 
-# Development with auto-reload
-npm run dev
-
-# Build for production
+# Build the project
 npm run build
 
-# Run tests (if available)
-npm test
+# Start the server
+npm start
 ```
 
-### Testing with Smithery
+## 🛠️ Development
 
-For development and testing, you can use the Smithery CLI:
+### Development Setup
 
 ```bash
-# Install Smithery CLI globally
-npm install -g @smithery/cli
+# Clone and setup
+git clone https://github.com/nosylabs/presearch-mcp-server.git
+cd presearch-mcp-server
+npm install
 
-# Start development server with hot reload
-npx @smithery/cli dev src/index.ts
+# Configure environment
+cp .env.example .env
+# Edit .env with your API key
 
-# Server will be available at http://localhost:8181
+# Build and run
+npm run build
+npm run dev
 ```
 
-### Code Quality
+### Available Scripts
 
-```bash
-# Lint code
-npm run lint
-
-# Format code
-npm run format
-
-# Type check
-npm run type-check
-```
+- `npm run build` - Compile TypeScript
+- `npm start` - Start the server
+- `npm run dev` - Development mode
 
 ## 🔍 Troubleshooting
 
 ### Common Issues
 
-**❌ "PRESEARCH_API_KEY environment variable is required"**
-- Ensure your `.env` file exists and contains a valid API key
-- Check that the `.env` file is in the project root directory
+#### Authentication Errors
 
-**❌ "Search failed: Request failed with status code 401"**
-- Verify your API key is correct and active
-- Check if your API key has sufficient permissions
+**Problem**: `401 Unauthorized` or `403 Forbidden` errors
 
-**❌ "Search failed: timeout"**
-- Check your internet connection
-- Presearch API might be experiencing high load
+**Solutions**:
+1. Verify your `PRESEARCH_API_KEY` is correct and active
+2. Check for extra spaces or characters in the API key
+3. Ensure your Presearch account has API access
 
-**❌ No results returned**
-- Try different search queries
-- Check if geo-targeting parameters are valid
-- Verify the time filter isn't too restrictive
+#### Network Issues
 
-### Debug Mode
+**Problem**: Timeout or connection errors
 
-Enable debug logging by setting:
+**Solutions**:
+1. Check your internet connection
+2. Verify the Presearch API is accessible
+3. Try with a simple test query
 
-```bash
-DEBUG=presearch-mcp npm start
-```
+#### Empty Results
+
+**Problem**: No search results returned
+
+**Solutions**:
+1. Try a different search query
+2. Check if the query contains special characters
+3. Verify language and location parameters
+
+## 🔒 Security
+
+- Store your API key in environment variables, never in code
+- Add `.env` to `.gitignore` to prevent accidental commits
+- Use HTTPS in production environments
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
-
-### Development Setup
+Contributions are welcome! Please:
 
 1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
+2. Create a feature branch
 3. Make your changes
-4. Add tests if applicable
-5. Commit your changes: `git commit -m 'Add amazing feature'`
-6. Push to the branch: `git push origin feature/amazing-feature`
-7. Open a Pull Request
+4. Submit a pull request
 
 ## 📚 Resources
 
-- [Presearch Official Website](https://presearch.com/)
 - [Presearch API Documentation](https://docs.presearch.io/)
 - [Model Context Protocol](https://modelcontextprotocol.io/)
-- [MCP SDK Documentation](https://github.com/modelcontextprotocol/typescript-sdk)
+- [GitHub Repository](https://github.com/nosylabs/presearch-mcp-server)
+
+## 🏢 About NosyLabs
+
+[NosyLabs](https://nosylabs.com) is a cutting-edge technology company focused on advancing artificial intelligence through innovative tools and integrations. We specialize in:
+
+- **AI Tool Development**: Creating powerful MCP servers and AI integrations
+- **Decentralized Technologies**: Building solutions that leverage decentralized platforms
+- **Open Source Contributions**: Contributing to the AI and blockchain communities
+- **Custom AI Solutions**: Developing tailored AI tools for businesses and developers
+
+### Our Mission
+To democratize access to advanced AI capabilities by building open, interoperable tools that enhance the AI ecosystem.
+
+### Connect with NosyLabs
+- 🌐 Website: [nosylabs.com](https://nosylabs.com)
+- 📧 Email: [contact@nosylabs.com](mailto:contact@nosylabs.com)
+- 🐙 GitHub: [github.com/nosylabs](https://github.com/nosylabs)
+- 🐦 Twitter: [@nosylabs](https://twitter.com/nosylabs)
+- 💼 LinkedIn: [NosyLabs](https://linkedin.com/company/nosylabs)
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
-- [Presearch](https://presearch.com/) for providing the decentralized search API
+- [Presearch](https://presearch.com/) for the decentralized search API
 - [Anthropic](https://anthropic.com/) for the Model Context Protocol
-- The open-source community for their valuable contributions
-
----
-
-<div align="center">
-
-**Made with ❤️ for the decentralized web**
-
-[⭐ Star this repo](https://github.com/NosytLabs/presearch-mcp) • [🐛 Report Bug](https://github.com/NosytLabs/presearch-mcp/issues) • [💡 Request Feature](https://github.com/NosytLabs/presearch-mcp/issues)
-
-</div>
+- [Smithery](https://smithery.ai) for providing excellent MCP server deployment platform
